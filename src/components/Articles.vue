@@ -1,6 +1,6 @@
 <template>
-  <div id="articles">
-    ARTICLES
+  <div class="articles container">
+    <h1 class="page-header">Latest Articles</h1>
   </div>
 </template>
 

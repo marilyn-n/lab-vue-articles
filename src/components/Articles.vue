@@ -1,14 +1,16 @@
 <template>
-  <div id="app">
-  TEST
+  <div id="articles">
+    ARTICLES
   </div>
 </template>
 
 <script>
 export default {
-  name: 'App',
-  components: {
+  name: 'articles',
+  data () {
+    return {
 
+    }
   }
 }
 </script>

@@ -28,5 +28,3 @@ new Vue({
   `,
 }).$mount('#app');
 
-// {/* <router-link to="/">Articles</router-link>
-// <router-link to="/dashboard-new">Dashboard</router-link> */}

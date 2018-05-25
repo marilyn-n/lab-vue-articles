@@ -3,6 +3,7 @@
   <div class="dashboard container">
    <h1 class="page-header">New Article</h1>
   </div>
+  
   <div class="container my-5">
   <div class="row justify-content-center">
     <div class="col-6">
@@ -23,11 +24,18 @@
   <div class="row justify-content-center"> 
   <div class="col-6 mb-3"> 
     <div class="form">
-      <div class="card mb-3" v-for="post in posts">
+      <div class="card mb-3" v-for="post in posts" :key="post.index">
         <div class="card-body"> 
-        <h3>Title: {{post.title}}</h3>
-        <p v-text="post.content"></p>
-        </div>
+          <span v-show="!inEditMode"></span><i v-on:click="clicked" class="fa fa-edit"></i>
+           <p>Title: {{post.title}}</p> 
+           <input type="text" v-show="inEditMode" v-model="post.title" v-on:keyup.enter="saved">
+            <br>
+          <span v-show="!inEditMode">{{post.content}}</span>
+          <br /> 
+          <textarea v-show="inEditMode" v-model="post.content" v-on:keyup.enter="saved" cols="30" rows="5" class="form-control" placeholder="Enter your content" type="text" ></textarea>
+          <br>
+          <p>Status: <b v-text="post.status"></b> </p> 
+        </div> 
       </div>
     </div>
   </div>
@@ -43,9 +51,11 @@ export default {
   name: "dashboard",
   data() {
     return {
+      inEditMode: false,
       posts: [],
       title: "",
-      content: ""
+      content: "",
+      status: false
     };
   },
   mounted() {
@@ -55,7 +65,8 @@ export default {
     addPost() {
       const data = {
         title: this.title,
-        content: this.content
+        content: this.content,
+        status: this.status
       };
       axios.post("http://localhost:3000/api/Posts", data).then(response => {
         console.log(response);
@@ -64,8 +75,7 @@ export default {
       });
     },
     clearInput() {
-      this.title = "",
-      this.content = "";
+      (this.title = ""), (this.content = "");
     },
     getPosts() {
       axios.get("http://localhost:3000/api/Posts").then(response => {
@@ -73,13 +83,28 @@ export default {
         console.log(this.posts);
         this.posts.reverse();
       });
+    },
+    clicked() {
+      this.inEditMode = true;
+    },
+    saved() {
+      this.inEditMode = false;
     }
   }
 };
 </script>
 
 <style>
-h1{
+h1 {
   text-align: center;
+}
+
+.fa-edit {
+  position: relative;
+  left: 490px;
+}
+
+.card-body > input{
+  width: 100%;
 }
 </style>

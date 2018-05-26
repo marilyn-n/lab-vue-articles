@@ -3,7 +3,6 @@
   <div class="dashboard container">
    <h1 class="page-header">New Article</h1>
   </div>
-  
   <div class="container my-5">
   <div class="row justify-content-center">
     <div class="col-6">
@@ -26,23 +25,32 @@
     <div class="form">
       <div class="card mb-3" v-for="post in posts" :key="post.index">
         <div class="card-body"> 
+          <!-- edit mode -->
           <span v-show="!inEditMode"></span><i v-on:click="clicked" class="fa fa-edit"></i>
-           <p>Title: {{post.title}}</p> 
+           <h4>Title: {{post.title}}</h4> 
            <input type="text" v-show="inEditMode" v-model="post.title" v-on:keyup.enter="saved">
             <br>
-          <span v-show="!inEditMode">{{post.content}}</span>
+          <p v-show="!inEditMode">{{post.content}}</p>
           <br /> 
           <textarea v-show="inEditMode" v-model="post.content" v-on:keyup.enter="saved" cols="30" rows="5" class="form-control" placeholder="Enter your content" type="text" ></textarea>
-          <br>
-          <p>Status: <b v-text="post.status"></b> </p> 
+          <br> 
+          <!-- status -->
+          <span v-show="!inEditMode"></span>
+          <label for="">Status: {{post.status}}</label>
+          <select v-model="post.status" v-show="inEditMode" v-on:keyup.enter="saved">
+              <option v-for="status in statusOptions" v-bind:key="status.statusOptions">{{status}}</option>
+
+               </select>
+               <!-- status -->
+              </div>
+           </div>
         </div> 
       </div>
     </div>
   </div>
  </div>
-</div>
-</div>
 </template>
+
 
 <script>
 import axios from "axios";
@@ -53,9 +61,10 @@ export default {
     return {
       inEditMode: false,
       posts: [],
-      title: "",
-      content: "",
-      status: false
+        title: "",
+        content: "",
+        status: "draft",
+       statusOptions: ["Public", "Private"]
     };
   },
   mounted() {
@@ -94,6 +103,7 @@ export default {
 };
 </script>
 
+
 <style>
 h1 {
   text-align: center;
@@ -104,7 +114,7 @@ h1 {
   left: 490px;
 }
 
-.card-body > input{
+.card-body > input {
   width: 100%;
 }
 </style>

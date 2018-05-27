@@ -14,10 +14,7 @@ new Vue({
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-      <a class="nav-link"><router-link to="/">Articles</router-link></a>
-      </li>
-      <li class="nav-item">
-      <a class="nav-link"><router-link to="/dashboard-new">Dashboard</router-link></a>
+      <a class="nav-link"><router-link to="/">Lab Articles</router-link></a>
       </li>
     </ul>
   </div>

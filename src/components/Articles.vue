@@ -24,8 +24,8 @@
          <div class='col-6'>
              <div class='card mb-3' v-for='post in posts' :key='post.index'>
                 <div class='card-body'>
-                  <div>
-                    <span><i v-on:click='deletePost(post)' class="fa fa-trash"></i></span>
+                  <div class="icons">
+                    <span><i v-on:click='deletePost(post)' class='fa fa-trash'></i></span>
                       <span><i v-on:click='clicked' class='fa fa-edit'></i></span>
                     </div>
 
@@ -38,12 +38,12 @@
                        <br />
                        <p v-show='!inEditMode'>{{post.content}}</p>
                        <br />
-                       <textarea v-show='inEditMode' v-model='post.content' v-on:keyup.enter='saved' cols='30' rows="5" class='form-control' placeholder='Enter your content' type="text">
+                       <textarea v-show='inEditMode' v-model='post.content' v-on:keyup.enter='saved' cols='30' rows='5' class='form-control' placeholder='Enter your content' type='text'>
                        </textarea>
                        <br />
                        <label for=''>Status: {{post.status}}</label>
                        <select v-model='post.status' v-show='inEditMode' v-on:keyup.enter='saved'>
-                           <option v-for='option in statusOptions' v-bind:key="option">{{option}}</option>
+                           <option v-for='option in statusOptions' v-bind:key='option'>{{option}}</option>
                        </select>
                    </form>
                    <!-- edit mode -->
@@ -58,18 +58,18 @@
 
 
 <script>
-import axios from "axios";
+import axios from 'axios';
 
 export default {
-  name: "dashboard",
+  name: 'dashboard',
   data() {
     return {
       inEditMode: false,
       posts: [],
-      title: "",
-      content: "",
-      status: "draft",
-      statusOptions: ["Public", "Private"]
+      title: '',
+      content: '',
+      status: 'draft',
+      statusOptions: ['Public', 'Private']
     };
   },
 
@@ -78,8 +78,9 @@ export default {
   },
 
   methods: {
+
     getPosts() {
-      axios.get("http://localhost:3000/api/Posts").then(response => {
+      axios.get('http://localhost:3000/api/Posts').then(response => {
         this.posts = response.data;
         console.log(this.posts);
         this.posts.reverse();
@@ -90,16 +91,17 @@ export default {
       const data = {
         title: this.title,
         content: this.content,
-        status: this.status
-        // statusOptions: this.statusOptions
+        status: this.status,
+        statusOptions: this.statusOptions
       };
 
-      axios.post("http://localhost:3000/api/Posts", data).then(response => {
+      axios.post('http://localhost:3000/api/Posts', data).then(response => {
         console.log(response);
         this.getPosts();
         this.clearInput();
       });
     },
+
 
     clicked() {
       this.inEditMode = true;
@@ -110,7 +112,7 @@ export default {
     },
 
     clearInput() {
-      (this.title = ""), (this.content = "");
+      (this.title = ''), (this.content = '');
     },
 
     deletePost(post) {
@@ -143,5 +145,10 @@ h1 {
 
 input:nth-child(2){
   width: 100%;
+}
+
+.icons > span {
+position: relative;
+right: 20px;
 }
 </style>
